@@ -1,24 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
+import InputData from './inputdata'
 import './App.css';
 
 function App() {
+  const [date, setDate] = React.useState("10/11/2019");
+  const [date2, setDate2] = React.useState("");
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form action="">
+        <div>
+          <div>
+          <label>Data Nascimento &nbsp;</label>
+          </div>
+          <InputData id="DataNascto" value={date} onChange={setDate}/>
+        </div>
+        <div>
+          <div>
+          <label>Data Morte &nbsp;</label>
+          </div>
+          <InputData id="DataMorte" value={date2} onChange={setDate2}/>
+        </div>
+        
+      </form>
     </div>
   );
 }
