@@ -16,32 +16,28 @@ class InputData extends Component {
         dia: props.value ? props.value.substring(0,2):"", 
         mes: props.value ? props.value.substring(3,5):"", 
         ano: props.value ? props.value.substring(6,10):"",
-        data: props.value ? props.value:"",
-        bordaErro: { border: "2px solid red", padding: "5px" },
-        bordaNormal: { border: "0px", padding: "5px" },
-        estiloInput: {border: 0, textAlign: "center" }
+        data: props.value ? props.value:""
     }
 
   }
 
   validatedate = (inputText) => {
 
-    let dateformat = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
+    let dateformat = /^(0?[1-9]|[12][0-9]|3[01])[/-](0?[1-9]|1[012])[/-]\d{4}$/;
     
     // Match the date format through regular expression
-    if (inputText.value.match(dateformat)) {
-        //document.form1.text1.focus();
+    if (inputText.match(dateformat)) {
         //Test which seperator is used '/' or '-'
-        let opera1 = inputText.value.split('/');
-        let opera2 = inputText.value.split('-');
+        let opera1 = inputText.split('/');
+        let opera2 = inputText.split('-');
         let lopera1 = opera1.length;
         let lopera2 = opera2.length;
         // Extract the string into month, date and year
         let pdate = ""
         if (lopera1 > 1) {
-            pdate = inputText.value.split('/');
+            pdate = inputText.split('/');
         } else if (lopera2 > 1) {
-            pdate = inputText.value.split('-');
+            pdate = inputText.split('-');
         }
         let dd = parseInt(pdate[0]);
         let mm = parseInt(pdate[1]);
@@ -70,7 +66,6 @@ class InputData extends Component {
         }
     } else {
       this.setState({ message: "Invalid date format!"});
-        //document.form1.text1.focus();
         return false;
     }
   }
@@ -80,8 +75,13 @@ class InputData extends Component {
     let { id, value, key } = event.target
 
     // trata tecla backspace
-    if (key === 8) {
-      value = value.trim.substring(0,value.trim.length-1)
+    if (key === 8 && value === "") {
+      if (id === "inputDataMonth") {
+        this.InputDay.current.focus()
+      }
+      if (id === "inputDataYear") {
+        this.InputMonth.current.focus()
+      }
     }
 
     this.handleValue( id, value, key )
@@ -116,7 +116,7 @@ class InputData extends Component {
                     ("00" + this.state.mes).substr(-2,2) + "/" + 
                     this.state.ano
 
-    if (validatedate(dataTemp)) {
+    if (this.validatedate(dataTemp)) {
 
       this.setState(
         { 
@@ -126,7 +126,7 @@ class InputData extends Component {
             this.state.ano
         }
       )
-
+debugger
       this.props.onChange(this.state.data)
     
     }
@@ -134,7 +134,7 @@ class InputData extends Component {
 
   handleValidation = (event) => {
 
-    let { id, value, maxLength } = event.target;
+    let { id, value } = event.target;
 
     let valorInt = parseInt(value)
 
@@ -193,7 +193,6 @@ class InputData extends Component {
 
   }
 
-
   handleFocus = (id, value, maxLength) => {
     if (value.length>=maxLength) {
       if (id === "inputDataDay") {
@@ -207,50 +206,48 @@ class InputData extends Component {
       }
     }
   }
-
   
   render() {
     const retorno = 
       <span>      
-      <span id = "inputDataQuadro"
-            ref = {this.quadro} 
-            style = { this.state.bordaNormal }>
-      <input  id = "inputDataDay"
-              //style = {this.estiloInput}
-              maxLength = "2"
-              size = "1"
-              ref = {this.InputDay}
-              onChange = {this.handleInput}
-              onKeyUp = {this.handleKey}
-              value = {this.state.dia}
-              />/
-      <input  id = "inputDataMonth"
-              //style = {this.estiloInput}
-              maxLength = "2"
-              size = "1"
-              ref = {this.InputMonth}
-              onChange = {this.handleInput}
-              onKeyUp = {this.handleKey}
-              value = {this.state.mes}
-              />/
-      <input  id = "inputDataYear" 
-              //style = {this.estiloInput}
-              maxLength="4" 
-              size="2" 
-              ref = {this.InputYear}
-              onChange = {this.handleInput}
-              onKeyUp = {this.handleKey}
-              value = {this.state.ano}
-              />
-      &nbsp;
-      <input  id = "buttonCalendar" 
-              type="button" 
-              value="Calendario"
-              ref = {this.buttonCalendar}
-              />
-      </span>
-      <p>{JSON.stringify(this.state)}</p>
-      <p>{JSON.stringify(this.props)}</p>
+        <span id = "inputDataQuadro"
+              ref = {this.quadro}>
+                
+        <input  id = "inputDataDay"
+                maxLength = "2"
+                size = "1"
+                ref = {this.InputDay}
+                onChange = {this.handleInput}
+                onKeyUp = {this.handleKey}
+                value = {this.state.dia}
+                />/
+        <input  id = "inputDataMonth"
+                maxLength = "2"
+                size = "1"
+                ref = {this.InputMonth}
+                onChange = {this.handleInput}
+                onKeyUp = {this.handleKey}
+                value = {this.state.mes}
+                />/
+        <input  id = "inputDataYear" 
+                maxLength="4" 
+                size="2" 
+                ref = {this.InputYear}
+                onChange = {this.handleInput}
+                onKeyUp = {this.handleKey}
+                value = {this.state.ano}
+                />
+        &nbsp;
+        <input  id = "buttonCalendar" 
+                type="button" 
+                value="Calendario"
+                ref = {this.buttonCalendar}
+                />
+        </span>
+
+        <p>{JSON.stringify(this.state)}</p>
+        <p>{JSON.stringify(this.props)}</p>
+
       </span>
 
     return retorno;

@@ -1,0 +1,7 @@
+,
+        bordaErro: { border: "2px solid red", padding: "5px" },
+        bordaNormal: { border: "0px", padding: "5px" },
+        estiloInput: {border: 0, textAlign: "center" }
+
+
+        
