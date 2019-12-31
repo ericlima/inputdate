@@ -15,10 +15,13 @@ function App() {
           <InputData id="DataNascto" value={date} onChange={setDate}/>
         </div>
         <div>
-          <div>
+          <span>
           <label>Data Morte &nbsp;</label>
-          </div>
+          </span>
           <InputData id="DataMorte" value={date2} onChange={setDate2}/>
+        </div>
+        <div>
+
         </div>
         
       </form>
